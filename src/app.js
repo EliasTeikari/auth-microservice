@@ -1,11 +1,16 @@
 const express = require("express");
 const app = express();
-const login = require("./routes/login");
-const port = process.env.PORT | 3000;
+const PORT = process.env.PORT || 5000;
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 require("dotenv").config();
 
 app.use(express.json());
+
+mongoose
+    .connect("mongodb://127.0.0.1:27017/auth-microservice")
+    .then(() => console.log("Database connected!"))
+    .catch((err) => console.log(err));
 
 const userSchema = new Schema({
     email: {
@@ -22,12 +27,24 @@ const userSchema = new Schema({
 
 const User = mongoose.model("User", userSchema);
 
-app.get("/", (req, res) => {
-    res.send("Hello world");
+app.post("/register", async (req, res) => {
+    try {
+        const newUser = new User({
+            email: "markus@gmail.com",
+            password: "1234abcd",
+        });
+        res.status(201).json({ message: "User created" });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
 });
 
-const user = new Sche();
+app.get("/", (req, res) => {
+    res.send("Server is up and running");
+});
 
-app.listen(port, () => {
-    console.log("App listening on port 3000");
+const user = new Schema();
+
+app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
 });
