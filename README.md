@@ -1,4 +1,4 @@
-# Auth Service (Go + Gin)
+# Auth Service (Node.js + Express)
 
 ## Overview
 This project implements a standalone authentication service in Node, using the Express.js framework. It supports user registration, login with password hashing, JSON Web Token (JWT) issuance and validation, and protects endpoints via middleware — perfect for use in a microservices architecture.
