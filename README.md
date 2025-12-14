@@ -16,3 +16,22 @@ This project implements a standalone authentication service in Node, using the E
 - POST /auth/refresh – refresh access token
 - POST /auth/logout – invalidate refresh token
 - GET /auth/me – return current user (from token)
+
+# Folder structure
+src/
+├── app.js                    # Main application setup
+├── config/
+│   └── database.js          # Database connection
+├── models/
+│   └── User.js              # User model (rename from registerDB.js)
+├── controllers/
+│   ├── authController.js    # Business logic for auth operations
+│   └── userController.js   # Business logic for user operations
+├── routes/
+│   ├── authRoutes.js        # Registration & login routes
+│   └── userRoutes.js        # User management routes (delete, update, etc.)
+├── middleware/
+│   ├── auth.js              # Authentication middleware
+│   └── validation.js        # Input validation middleware
+└── utils/
+    └── passwordHash.js      # Password hashing utilities
