@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 require("dotenv").config();
@@ -41,6 +41,11 @@ app.post("/register", async (req, res) => {
 
 app.get("/", (req, res) => {
     res.send("Server is up and running");
+});
+
+app.get("/test", (req, res) => {
+    if (!req) res.status(500).send("Request does not exist");
+    if (req) res.status(200).send("Hello this works now");
 });
 
 const user = new Schema();
