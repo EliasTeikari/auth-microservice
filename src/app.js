@@ -4,15 +4,13 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3000;
 const userSchema = require("./models/registerDB.js");
 const registerRoutes = require("./routes/registerRoutes.js");
+const connectDB = require("./config/database.js");
 require("dotenv").config();
+
+connectDB(); // connected mongoDB config
 
 app.use(express.json());
 app.use("/register", registerRoutes);
-
-mongoose
-    .connect("mongodb://127.0.0.1:27017/auth-microservice")
-    .then(() => console.log("Database connected!"))
-    .catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
     res.send("Server is up and running");
