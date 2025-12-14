@@ -29,6 +29,7 @@ function validateRegister(req, res, next) {
     const { error } = registerSchema.validate(req.body);
 
     if (error) {
+        console.log("middleware: input does not follow register schema");
         res.status(400).json({ error: error.message });
     }
 
@@ -39,6 +40,7 @@ function validateLogin(req, res, next) {
     const { error } = loginSchema.validate(req.body);
 
     if (error) {
+        console.log("middleware: input does not follow login schema");
         res.status(400).send({ error: error.message });
     }
 
