@@ -30,7 +30,7 @@ function validateRegister(req, res, next) {
 
     if (error) {
         console.log("middleware: input does not follow register schema");
-        res.status(400).json({ error: error.message });
+        return res.status(400).json({ error: error.message });
     }
 
     next();
@@ -41,10 +41,10 @@ function validateLogin(req, res, next) {
 
     if (error) {
         console.log("middleware: input does not follow login schema");
-        res.status(400).send({ error: error.message });
+        return res.status(400).send({ error: error.message });
     }
 
     next();
 }
 
-module.exports = (validateRegister, validateLogin);
+module.exports = { validateRegister, validateLogin };
