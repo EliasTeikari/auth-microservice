@@ -24,4 +24,10 @@ router.post("/", validateRegister, async (req, res) => {
     }
 });
 
+router.get("/", (req, res) => {
+    if (req.body.email) {
+        res.status(200);
+    }
+});
+
 module.exports = router;

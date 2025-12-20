@@ -3,14 +3,14 @@ const app = express();
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3000;
 const userSchema = require("./models/User.js");
-const registerRoutes = require("./routes/authRoutes.js");
+const authRoutes = require("./routes/authRoutes.js");
 const connectDB = require("./config/database.js");
 require("dotenv").config();
 
 connectDB(); // connected mongoDB config
 
 app.use(express.json());
-app.use("/register", registerRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {
     res.send("Server is up and running");
