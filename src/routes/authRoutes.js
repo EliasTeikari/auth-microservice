@@ -2,7 +2,7 @@ const express = require("express");
 const User = require("../models/User");
 const router = express.Router();
 const { validateRegister } = require("../middleware/validation");
-const { hashPassword } = require("../utils/passwordHash");
+const { hashPassword, comparePassword } = require("../utils/passwordHash");
 
 router.post("/", validateRegister, async (req, res) => {
     try {
@@ -27,6 +27,24 @@ router.post("/", validateRegister, async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {});
+router.post("/login", async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.body.email });
+
+        if (!user) {
+            return res.status(401).json({ error: "Invalid credentials" });
+        }
+
+        const isMatch = await comparePassword(req.body.password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ error: "Invalid credentials" });
+        }
+
+        res.status(200).json({ message: "Login successful" });
+    } catch (err) {
+        res.status(500).json({ error: "Login failed" });
+    }
+});
 
 module.exports = router;
