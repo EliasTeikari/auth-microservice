@@ -1,4 +1,5 @@
 const express = require("express");
+const crypto = require("crypto");
 const User = require("../models/User");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
@@ -16,7 +17,7 @@ const generateAccessToken = (user) => {
 };
 
 const generateRefreshToken = () => {
-    return crypto.randmBytes(64).toString("hex");
+    return crypto.randomBytes(64).toString("hex");
 };
 
 router.post("/", validateRegister, async (req, res) => {
@@ -65,7 +66,7 @@ router.post("/login", async (req, res) => {
             expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         });
 
-        res.status(200).json({ token });
+        res.status(200).json({ accessToken, refreshToken });
     } catch (err) {
         res.status(500).json({ error: "Login failed" });
     }
