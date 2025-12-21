@@ -35,7 +35,7 @@ describe("Registering a user POST /auth", () => {
         });
 
         expect(res.statusCode).toBe(201);
-        expect(res.body.message).toBe("User created guys!");
+        expect(res.body.message).toBe("User created");
 
         const user = await User.findOne({ email: "test@example.com" });
         expect(user).toBeTruthy();
