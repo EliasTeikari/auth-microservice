@@ -4,18 +4,18 @@ A standalone authentication service built with Node.js and Express 5. Implements
 
 ## Features
 
-- **User Registration** with email validation
-- **Secure Login** with bcrypt password hashing
-- **JWT Access Tokens** (15-minute expiry)
-- **Refresh Token Rotation** (7-day expiry, stored in MongoDB)
-- **Token Revocation** via logout endpoint
-- **Input Validation** using Joi schemas
-- **MongoDB** with Mongoose ODM
+-   **User Registration** with email validation
+-   **Secure Login** with bcrypt password hashing
+-   **JWT Access Tokens** (15-minute expiry)
+-   **Refresh Token Rotation** (7-day expiry, stored in MongoDB)
+-   **Token Revocation** via logout endpoint
+-   **Input Validation** using Joi schemas
+-   **MongoDB** with Mongoose ODM
 
 ## Tech Stack
 
 | Component        | Technology           |
-|------------------|----------------------|
+| ---------------- | -------------------- |
 | Runtime          | Node.js              |
 | Framework        | Express 5            |
 | Database         | MongoDB + Mongoose 9 |
@@ -28,8 +28,8 @@ A standalone authentication service built with Node.js and Express 5. Implements
 
 ### Prerequisites
 
-- Node.js 18+
-- MongoDB running locally on port `27017`
+-   Node.js 18+
+-   MongoDB running locally on port `27017`
 
 ### Installation
 
@@ -82,21 +82,24 @@ POST /auth/
 ```
 
 **Request Body:**
+
 ```json
 {
-  "email": "user@example.com",
-  "password": "securepassword123"
+    "email": "user@example.com",
+    "password": "securepassword123"
 }
 ```
 
 **Validation Rules:**
-- Email: valid format, `.com` or `.net` TLD, 3-50 characters
-- Password: alphanumeric, 3-30 characters
+
+-   Email: valid format, `.com` or `.net` TLD, 3-50 characters
+-   Password: alphanumeric, 3-30 characters
 
 **Response:**
-- `201 Created` — User created successfully
-- `400 Bad Request` — Validation error
-- `409 Conflict` — User already exists
+
+-   `201 Created` — User created successfully
+-   `400 Bad Request` — Validation error
+-   `409 Conflict` — User already exists
 
 ---
 
@@ -107,21 +110,23 @@ POST /auth/login
 ```
 
 **Request Body:**
+
 ```json
 {
-  "email": "user@example.com",
-  "password": "securepassword123"
+    "email": "user@example.com",
+    "password": "securepassword123"
 }
 ```
 
 **Response:**
-- `200 OK` — Returns access token and refresh token
-- `401 Unauthorized` — Invalid credentials
+
+-   `200 OK` — Returns access token and refresh token
+-   `401 Unauthorized` — Invalid credentials
 
 ```json
 {
-  "accessToken": "eyJhbGciOiJIUzI1NiIs...",
-  "refreshToken": "a1b2c3d4e5f6..."
+    "accessToken": "eyJhbGciOiJIUzI1NiIs...",
+    "refreshToken": "a1b2c3d4e5f6..."
 }
 ```
 
@@ -134,20 +139,22 @@ POST /auth/refresh
 ```
 
 **Request Body:**
+
 ```json
 {
-  "refreshToken": "a1b2c3d4e5f6..."
+    "refreshToken": "a1b2c3d4e5f6..."
 }
 ```
 
 **Response:**
-- `200 OK` — Returns new access token
-- `400 Bad Request` — Refresh token required
-- `401 Unauthorized` — Invalid or expired refresh token
+
+-   `200 OK` — Returns new access token
+-   `400 Bad Request` — Refresh token required
+-   `401 Unauthorized` — Invalid or expired refresh token
 
 ```json
 {
-  "accessToken": "eyJhbGciOiJIUzI1NiIs..."
+    "accessToken": "eyJhbGciOiJIUzI1NiIs..."
 }
 ```
 
@@ -160,15 +167,17 @@ POST /auth/logout
 ```
 
 **Request Body:**
+
 ```json
 {
-  "refreshToken": "a1b2c3d4e5f6..."
+    "refreshToken": "a1b2c3d4e5f6..."
 }
 ```
 
 **Response:**
-- `200 OK` — Logged out successfully
-- `400 Bad Request` — Token not found or not provided
+
+-   `200 OK` — Logged out successfully
+-   `400 Bad Request` — Token not found or not provided
 
 ---
 
@@ -180,12 +189,13 @@ To protect routes, use the auth middleware:
 const authMiddleware = require("./middleware/auth");
 
 app.get("/protected", authMiddleware, (req, res) => {
-  // req.user contains { userId, email }
-  res.json({ user: req.user });
+    // req.user contains { userId, email }
+    res.json({ user: req.user });
 });
 ```
 
 **Required Header:**
+
 ```
 Authorization: Bearer <access_token>
 ```
@@ -221,11 +231,7 @@ Tests use `mongodb-memory-server` for an isolated in-memory MongoDB instance.
 
 ## Security Considerations
 
-- Passwords are hashed with bcrypt (10 salt rounds)
-- Access tokens expire after 15 minutes
-- Refresh tokens expire after 7 days and are stored in MongoDB with TTL index
-- JWT secret should be a strong, randomly generated string in production
-
-## License
-
-ISC
+-   Passwords are hashed with bcrypt (10 salt rounds)
+-   Access tokens expire after 15 minutes
+-   Refresh tokens expire after 7 days and are stored in MongoDB with TTL index
+-   JWT secret should be a strong, randomly generated string in production
