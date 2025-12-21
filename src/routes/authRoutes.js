@@ -24,10 +24,6 @@ router.post("/", validateRegister, async (req, res) => {
     }
 });
 
-router.get("/", (req, res) => {
-    if (req.body.email) {
-        res.status(200);
-    }
-});
+router.post("/", async (req, res) => {});
 
 module.exports = router;
